@@ -153,6 +153,11 @@ Note that `--model-dir` takes as input the directory path which was specified in
 ### Write a new trainer
 A good practice is to go through `dassl/engine/trainer.py` to get familar with the base trainer classes, which provide generic functions and training loops. To write a trainer class for domain adaptation or semi-supervised learning, the new class can subclass `TrainerXU`. For domain generalization, the new class can subclass `TrainerX`. In particular, `TrainerXU` and `TrainerX` mainly differ in whether using a data loader for unlabeled data. With the base classes, a new trainer may only need to implement the `forward_backward()` method, which performs loss computation and model update. See `dassl/enigne/da/source_only.py` for example.
 
+Some tips:
+- Write a new trainer, which can inherit the `mother class`, and put it in the corresponding folder, e.g., `dassl/engine/` for da methods.
+- Import the class to `dassl/engine/da/__init__.py` file.
+- Define some parameters in 'dassl/config/defaults.py' for your new method.
+
 ### Add a new backbone/head/network
 `backbone` corresponds to a convolutional neural network model which performs feature extraction. `head` (which is an optional module) is mounted on top of `backbone` for further processing, which can be, for example, a MLP. `backbone` and `head` are basic building blocks for constructing a `SimpleNet()` (see `dassl/engine/trainer.py`) which serves as the primary model for a task. `network` contains custom neural network models, such as an image generator.
 
